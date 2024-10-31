@@ -10,7 +10,7 @@ public class UHCLESystem {
 		Scanner input = new Scanner(System.in);
 		String selection = "";
 
-		while (!selection.equals("x")) // while not x, keep displaying the menu
+		while (!selection.equalsIgnoreCase("x")) // while not x, keep displaying the menu
 		{
 			// display the menu
 			System.out.println();
