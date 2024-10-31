@@ -59,24 +59,53 @@ public class Hibernate implements Data {
 		}
 	}
 
-	public ArrayList<String> getMyEnrolledCourse(String sid)
+	public ArrayList<String> getMyEnrolledCourse(String sid) {
+		setup();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		String hql = "Select E.cid from Enrollment E where E.sid =: studentID";// Enrollment is class name
+		Query query = session.createQuery(hql);
+		query.setParameter("studentID", sid);
+		ArrayList<String> courses = (ArrayList<String>) query.list();
+		session.getTransaction().commit();
+		session.close();
+		exit();
+		return courses;
+
+	}
+
+	public ArrayList<String> getMyTeachingCourse(String id) {
+		setup();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		String hql = "Select C.cid from Course C where C.id =: instructor";
+		Query query = session.createQuery(hql);
+		query.setParameter("instructor", id);
+		ArrayList<String> courses = (ArrayList<String>) query.list();
+		session.getTransaction().commit();
+		session.close();
+		exit();
+		return courses;
+
+	}
+	
+	public ArrayList<String> getMyEnrolledStudentNames(String cid)
 	{
 		setup();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
-		String hql = "Select E.cid from Enrollment E where E.sid =: studentID";// Enrollment is class name 
+		String hql = "Select E.sid from Enrollement E where E.cid := courseID";
 		Query query = session.createQuery(hql);
-		query.setParameter("studentID",sid);
-		ArrayList<String> courses = (ArrayList<String>)query.list();
+		query.setParameter(courseID, cid);
+		ArrayList<String> names = (ArrayList<String>)query.list();
 		session.getTransaction().commit();
 		session.close();
 		exit();
-		return courses;
-		
-		
+		return names;
 		
 		
 	}
-
 }
