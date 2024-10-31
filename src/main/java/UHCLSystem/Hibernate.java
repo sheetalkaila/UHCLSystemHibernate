@@ -90,22 +90,37 @@ public class Hibernate implements Data {
 		return courses;
 
 	}
+
+	public ArrayList<String> getMyEnrolledStudentNames(String cid) {
+		setup();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		String hql = "Select E.sid from Enrollement E where E.cid := courseID";
+		Query query = session.createQuery(hql);
+		query.setParameter("courseID", cid);
+		ArrayList<String> names = (ArrayList<String>) query.list();
+		session.getTransaction().commit();
+		session.close();
+		exit();
+		return names;
+
+	}
 	
-	public ArrayList<String> getMyEnrolledStudentNames(String cid)
+	public ArrayList<CourseNote> getCourseNotes(String cid)
 	{
 		setup();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
-		String hql = "Select E.sid from Enrollement E where E.cid := courseID";
+		String hql = "Select C.content from CourseNote C where C.cid := coureID";
 		Query query = session.createQuery(hql);
-		query.setParameter(courseID, cid);
-		ArrayList<String> names = (ArrayList<String>)query.list();
+		query.setParameter("coureID", cid);
+		ArrayList<CourseNote> notes = (ArrayList<CourseNote>)query.list();
 		session.getTransaction().commit();
 		session.close();
 		exit();
-		return names;
-		
+		return notes;
 		
 	}
 }

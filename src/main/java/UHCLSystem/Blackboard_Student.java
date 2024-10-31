@@ -14,8 +14,7 @@ public class Blackboard_Student extends Blackboard {
 		{
 			System.out.println();
 			System.out.println("Welcome to UHCL Blackboard!");
-			System.out.println("Select your course:");
-			// display the list of courses  //getMyEnrolledCourse from data class
+			System.out.println("Select your course:");						 
 			System.out.println("Please select your options:");
 			System.out.println("v: view course notes");
 			System.out.println("x: leave the course");
