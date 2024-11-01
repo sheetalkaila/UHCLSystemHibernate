@@ -30,6 +30,10 @@ public class UHCLESystem {
 				String id = input.nextLine();
 				System.out.println("Please enter your password: ");
 				String password = input.nextLine();
+				Hibernate hibernate = new Hibernate();				
+				uhcluser loginuser = hibernate.login(id,password);
+				
+
 
 			}
 
@@ -37,8 +41,26 @@ public class UHCLESystem {
 				System.out.println("Please enter your id: ");
 				String id = input.nextLine();
 				System.out.println("Please enter your password: ");
-				String password = input.nextLine();
-				// login eService;
+				String password = input.nextLine();			
+				uhcluser loginuser = (new Hibernate()).login(id,password);
+				
+				Blackboard b = null;
+				
+				if(loginuser.getType().equalsIgnoreCase("student")) 
+				{
+					b = new Blackboard_Student();					
+				}
+				else if(loginuser.getType().equalsIgnoreCase("faculty")) 
+				{
+					b = new Blackboard_Faculty();
+				}
+				else
+				{
+					System.out.println("Not valid user type");
+				}
+				
+				b.welcomeBlackboard(loginuser);
+				
 
 			}
 		}

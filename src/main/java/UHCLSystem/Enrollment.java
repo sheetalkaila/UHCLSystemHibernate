@@ -14,18 +14,18 @@ public class Enrollment {
 	@Column(name="studentID")
 	private String studentID;
 		
-	@Column(name="couserID")
-	private String couserID;
+	@Column(name="courseID")
+	private String courseID;
 
 	public Enrollment() {
 		super();
 	}
 
-	public Enrollment(int autoID, String studentID, String couserID) {
+	public Enrollment(int autoID, String studentID, String courseID) {
 		super();
 		this.autoID = autoID;
 		this.studentID = studentID;
-		this.couserID = couserID;
+		this.courseID = courseID;
 	}
 
 	public int getAutoID() {
@@ -45,11 +45,11 @@ public class Enrollment {
 	}
 
 	public String getCouserID() {
-		return couserID;
+		return courseID;
 	}
 
-	public void setCouserID(String couserID) {
-		this.couserID = couserID;
+	public void setCourseID(String courseID) {
+		this.courseID = courseID;
 	}
 		
 	

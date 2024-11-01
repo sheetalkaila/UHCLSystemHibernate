@@ -5,10 +5,15 @@
 		<!-- Database connection settings -->
 		<property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 		<property name="connection.url">
-			jdbc:mysql://mis-sql.uhcl.edu/kailas0460?useSSL=false</property>
+			jdbc:mysql://cobmysql.uhcl.edu/kailas0460?useSSL=false</property>
 		<property name="connection.username">kailas0460</property>
 		<property name="connection.password">2280460</property>
-		<property name="show_sql">true</property>
+		<property name="show_sql">false</property>
+		
+		<mapping class="UHCLSystem.uhcluser" />
+    	<mapping class="UHCLSystem.course" />
+    	<mapping class="UHCLSystem.CourseNote" />
+    	<mapping class="UHCLSystem.Enrollment" />
 
 
 	</session-factory>

@@ -14,8 +14,8 @@ public class CourseNote {
 	@Column(name="userID")
 	private String userID;
 		
-	@Column(name="couserID")
-	private String couserID;
+	@Column(name="courseID")
+	private String courseID;
 		
 	@Column(name="content")
 	private String content;
@@ -27,11 +27,11 @@ public class CourseNote {
 		super();
 	}
 	
-	public CourseNote(int autoID, String userID, String couserID, String content, String datetime) {
+	public CourseNote(int autoID, String userID, String courseID, String content, String datetime) {
 		super();
 		this.autoID = autoID;
 		this.userID = userID;
-		this.couserID = couserID;
+		this.courseID = courseID;
 		this.content = content;
 		this.datetime = datetime;
 	}
@@ -52,12 +52,12 @@ public class CourseNote {
 		this.userID = userID;
 	}
 
-	public String getCouserID() {
-		return couserID;
+	public String getCourseID() {
+		return courseID;
 	}
 
-	public void setCouserID(String couserID) {
-		this.couserID = couserID;
+	public void setCourseID(String courseID) {
+		this.courseID = courseID;
 	}
 
 	public String getContent() {

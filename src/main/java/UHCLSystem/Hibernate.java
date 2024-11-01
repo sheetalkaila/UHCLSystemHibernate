@@ -2,6 +2,7 @@ package UHCLSystem;
 
 import java.util.ArrayList;
 
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -64,9 +65,9 @@ public class Hibernate implements Data {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		String hql = "Select E.cid from Enrollment E where E.sid =: studentID";// Enrollment is class name
+		String hql = "Select E.courseID from Enrollment E where E.studentID =:sid";// Enrollment is class name
 		Query query = session.createQuery(hql);
-		query.setParameter("studentID", sid);
+		query.setParameter("sid", sid);
 		ArrayList<String> courses = (ArrayList<String>) query.list();
 		session.getTransaction().commit();
 		session.close();
@@ -80,9 +81,9 @@ public class Hibernate implements Data {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		String hql = "Select C.cid from Course C where C.id =: instructor";
+		String hql = "Select C.courseID from course C where C.instructor =: loginID";
 		Query query = session.createQuery(hql);
-		query.setParameter("instructor", id);
+		query.setParameter("loginID", id);
 		ArrayList<String> courses = (ArrayList<String>) query.list();
 		session.getTransaction().commit();
 		session.close();
@@ -113,14 +114,26 @@ public class Hibernate implements Data {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
-		String hql = "Select C.content from CourseNote C where C.cid := coureID";
+		String hql = "from CourseNote C where C.courseID = :cid";
 		Query query = session.createQuery(hql);
-		query.setParameter("coureID", cid);
+		query.setParameter("cid", cid);
 		ArrayList<CourseNote> notes = (ArrayList<CourseNote>)query.list();
 		session.getTransaction().commit();
 		session.close();
 		exit();
 		return notes;
+		
+	}
+
+	
+	public void writeNote(CourseNote c) {
+		setup();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(c);
+		session.getTransaction().commit();
+		session.close();
+		exit(); 
 		
 	}
 }
