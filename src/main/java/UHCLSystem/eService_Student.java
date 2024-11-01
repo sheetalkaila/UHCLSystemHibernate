@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class eService_Student extends eService {
 
-	@Override
 	public void welcomeEservice()
 	{
 		Scanner input = new Scanner(System.in);
@@ -37,7 +36,7 @@ public class eService_Student extends eService {
 			if (selection.equalsIgnoreCase("r")) {
 					System.out.println("Welcome to register a new course!");
 					System.out.println("These are the courses available to you:");
-					// display the list of courses //getMyOpenCourse from data class
+					// display the list of courses that is for her major //getMyOpenCourse from data class
 					System.out.println("Or any other key to exit");
 					//after selecting one course
 					System.out.println("The course is added to your schedule!");
