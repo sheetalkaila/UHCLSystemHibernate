@@ -1,13 +1,16 @@
 package UHCLSystem;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class eService_Faculty extends eService{
 
-	public void welcomeEservice()
+	@Override
+	public void welcomeEservice(uhcluser loginuser)
 	{
 		Scanner input = new Scanner(System.in);
 		String selection = "";
+		Hibernate h = new Hibernate();
 		
 		while (!selection.equalsIgnoreCase("x")) 
 		{
@@ -22,8 +25,25 @@ public class eService_Faculty extends eService{
 
 			if (selection.equalsIgnoreCase("v")) {
 				System.out.println("courses");
-				// display the list of courses  //getMyTeachingCourse from data class		
-				//display the name of students who enrolled in each course //getMyEnrolledStudentNames from data class 
+				
+				ArrayList<String> tech_courses =h.getMyTeachingCourse(loginuser.getLoginID());
+				
+				for(String tc: tech_courses) 
+				{
+					System.out.println(tc);
+					System.out.println("Students enrolled:");
+					System.out.println();
+
+					ArrayList<String> stu_name = h.getMyEnrolledStudentNames(tc);
+					for(String s : stu_name) 
+					{
+						System.out.println(s);
+
+					}
+
+				}
+				
+				
 			}
 
 		}

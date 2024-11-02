@@ -30,9 +30,25 @@ public class UHCLESystem {
 				String id = input.nextLine();
 				System.out.println("Please enter your password: ");
 				String password = input.nextLine();
-				Hibernate hibernate = new Hibernate();				
-				uhcluser loginuser = hibernate.login(id,password);
+				Hibernate h = new Hibernate();				
+				uhcluser loginuser = h.login(id,password);
 				
+				eService e = null;
+				
+				if(loginuser.getType().equalsIgnoreCase("student")) 
+				{
+					e = new eService_Student();					
+				}
+				else if(loginuser.getType().equalsIgnoreCase("faculty")) 
+				{
+					e = new eService_Faculty();
+				}
+				else
+				{
+					System.out.println("Not valid user type");
+				}
+				
+				e.welcomeEservice(loginuser);
 
 
 			}

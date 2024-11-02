@@ -97,9 +97,9 @@ public class Hibernate implements Data {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 
-		String hql = "Select E.sid from Enrollement E where E.cid := courseID";
+		String hql = "Select E.studentID from Enrollment E where E.courseID =: cid";
 		Query query = session.createQuery(hql);
-		query.setParameter("courseID", cid);
+		query.setParameter("cid", cid);
 		ArrayList<String> names = (ArrayList<String>) query.list();
 		session.getTransaction().commit();
 		session.close();
@@ -135,5 +135,66 @@ public class Hibernate implements Data {
 		session.close();
 		exit(); 
 		
+	}
+
+	
+	public ArrayList<String> getMyOpenCourse(String sid) {
+
+		setup();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		String hql = "Select C.courseID from course C  where  status= 'open' and major = (select U.major from uhcluser U where U.loginID = :sid) and courseID not in (select E.courseID from Enrollment E where E.studentID =:sid)";
+		Query query = session.createQuery(hql);
+		query.setParameter("sid", sid);
+		ArrayList<String> courses = (ArrayList<String>) query.list();
+		session.getTransaction().commit();
+		session.close();
+		exit();
+		return courses;
+	}
+
+	public void registerCourse(String sid, String cid) {
+		setup();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Enrollment e = new Enrollment();
+		e.setCourseID(cid);
+		e.setStudentID(sid);
+		session.save(e);
+		
+		//update enrollment in course table at the same time 		
+		course c = session.load(course.class,cid);
+		c.setEnrolled((c.getEnrolled())+1);	
+		c.setCap((c.getCap())-1);
+		
+		//update the status to full is it matched the capacity
+		if(c.getCap()==0) {
+			c.setStatus("full");
+		}
+		
+		session.update(c);
+		session.getTransaction().commit();
+		session.close();
+		exit(); 
+		
+		
+		
+	}
+
+	public String getInstructor(String cid) {
+		
+		setup();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		String hql = "Select C.instructor from course C where C.courseID =:cid";// Enrollment is class name
+		Query query = session.createQuery(hql);
+		query.setParameter("cid", cid);
+		String instructor = (String)query.getSingleResult();
+		session.getTransaction().commit();
+		session.close();
+		exit();
+		return instructor;
 	}
 }

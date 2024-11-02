@@ -1,13 +1,16 @@
 package UHCLSystem;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class eService_Student extends eService {
 
-	public void welcomeEservice()
+	@Override
+	public void welcomeEservice(uhcluser loginuser)
 	{
 		Scanner input = new Scanner(System.in);
 		String selection = "";
+		Hibernate h = new Hibernate();
 		
 		while (!selection.equalsIgnoreCase("x")) 
 		{
@@ -22,23 +25,46 @@ public class eService_Student extends eService {
 			System.out.println();
 
 			if (selection.equalsIgnoreCase("v")) {
-				/*if(course == null )
+				
+				ArrayList<String> e_courses = h.getMyEnrolledCourse(loginuser.getLoginID());
+				
+				if(e_courses.size() == 0 )
 				{
 					System.out.println("You do not have any course registered!");
 
 				}
 				else
-				{
-					System.out.println("view my courses");
-					// display the list of courses //getMyEnrolledCourse from data class
-				}*/
+				{			
+					for(int i =0;i < e_courses.size() ;i++) 
+					{
+						String inst = h.getInstructor(e_courses.get(i));
+						System.out.println(e_courses.get(i)+",Instructor: Dr."+inst);
+
+					}
+				}
 			}
 			if (selection.equalsIgnoreCase("r")) {
 					System.out.println("Welcome to register a new course!");
 					System.out.println("These are the courses available to you:");
-					// display the list of courses that is for her major //getMyOpenCourse from data class
+					
+					
+					ArrayList<String> open_courses = h.getMyOpenCourse(loginuser.getLoginID());
+					
+					for(int i =0;i < open_courses.size() ;i++) 
+					{
+						System.out.println(i+1 + "." + open_courses.get(i) );
+
+					}					
 					System.out.println("Or any other key to exit");
-					//after selecting one course
+					
+					selection = input.nextLine();
+					int course_sel = 0;
+					if(isInteger.test(selection)) 
+					{
+						course_sel = Integer.parseInt(selection);
+					}
+					
+					h.registerCourse(loginuser.getLoginID(), open_courses.get(course_sel-1));					
 					System.out.println("The course is added to your schedule!");
 
 
@@ -48,6 +74,7 @@ public class eService_Student extends eService {
 			}
 
 		}
+
 	
 
 }
