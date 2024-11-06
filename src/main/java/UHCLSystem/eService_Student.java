@@ -64,9 +64,14 @@ public class eService_Student extends eService {
 						course_sel = Integer.parseInt(selection);
 					}
 					
-					h.registerCourse(loginuser.getLoginID(), open_courses.get(course_sel-1));					
-					System.out.println("The course is added to your schedule!");
+					
+					if(course_sel > 0 && course_sel <= open_courses.size() ) 
+					{
+						h.registerCourse(loginuser.getLoginID(), open_courses.get(course_sel-1));					
+						System.out.println("The course is added to your schedule!");
 
+					}
+					
 
 					
 			}

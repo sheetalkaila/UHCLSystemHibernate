@@ -1,11 +1,13 @@
 package UHCLSystem;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UHCLESystem {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
 
 		Scanner input = new Scanner(System.in);
 		String selection = "";

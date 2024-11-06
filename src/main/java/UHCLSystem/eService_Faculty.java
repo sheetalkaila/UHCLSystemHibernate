@@ -32,12 +32,13 @@ public class eService_Faculty extends eService{
 				{
 					System.out.println(tc);
 					System.out.println("Students enrolled:");
-					System.out.println();
 
 					ArrayList<String> stu_name = h.getMyEnrolledStudentNames(tc);
 					for(String s : stu_name) 
 					{
 						System.out.println(s);
+						System.out.println();
+
 
 					}
 
